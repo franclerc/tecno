@@ -1,16 +1,18 @@
-class Puertas {
-  //Constructor
+class Minijuego {
   constructor() {
     this.puerta=[];
+    this.pasarDeEstado = [];
     this.puerta_bebida=[];
     this.puerta_muffin=[];
     this.Puerta_Comeme= 0;
-    this.Puerta_Bebeme= 0;
+    this.Puerta_Bebeme= 0
+    this.time = 0;
     this.f=13; // cantidad de puertas cerradas
     this.p=7;  // cantidad de puertas abiertas
     this.Puerta_Muffin_Abierta = 0;
     this.Puerta_Bebida_Abierta = 0;
     this.tipografia= loadFont('tipografias/IMPACTFUL.ttf');
+    this.Fondodejuego = loadImage('imgjuego/Fondo.png');
     for ( let i = 0; i < this.f; i++ ) {
       this.puerta[i] = loadImage('imgjuego/puerta.png');
     }
@@ -21,8 +23,10 @@ class Puertas {
       this.puerta_bebida[i] = loadImage('imgjuego/puertabebida.png');
     }
   }
-//dibujar
+
   dibujar() {
+    background(0);
+    image(this.Fondodejuego, 0, 0);
     fill(160);
     textSize(20);
     textFont(this.tipografia);
@@ -42,6 +46,7 @@ class Puertas {
   }
 
   Abrirpuerta() {
+
     if (mouseX > 60 && mouseX < 117 && mouseY > 85 && mouseY < 185) { //1era fila
       this.puerta[0]=this.puerta_muffin[0];
       this.Puerta_Muffin_Abierta++;
@@ -90,6 +95,7 @@ class Puertas {
       this.puerta[11]=this.puerta_muffin[5];
       this.Puerta_Muffin_Abierta++;
     }
+
     if (this.Puerta_Muffin_Abierta > 0 && this.Puerta_Bebida_Abierta > 0) {
       // Reiniciar el juego
       this.Puerta_Muffin_Abierta = 0;
@@ -99,6 +105,7 @@ class Puertas {
       // Restaurar las imágenes de las puertas cerradas
       this.puerta = [...this.puerta.map(() => loadImage("imgjuego/puerta.png"))];
     }
+
     if (this.Puerta_Muffin_Abierta == 2) {
       this.Puerta_Comeme++;
     } else if (this.Puerta_Muffin_Abierta == 4) {
@@ -114,19 +121,48 @@ class Puertas {
       this.Puerta_Bebeme++;
     }
   }
-  obtenerPuertaComeme() {  // para poder utilizar estas variables en otra class
-    return this.Puerta_Comeme;
+
+  PuertaCondicion() {
+    text(this.time, 30, 50);
+    if (this.Puerta_Comeme >= 3) {
+      this.time++;
+      if (this.time >= 80) {
+        this.pasarDeEstado[0] = true;
+        this.pasarDeEstado[2]= true;
+        this.time=0;
+      } else {
+        this.pasarDeEstado[0] = false;
+        this.pasarDeEstado[2]= false;
+      }
+    }
+    if (this.Puerta_Bebeme >= 3) {
+      this.time++;
+      if (this.time >= 80) {
+        this.pasarDeEstado[1] = true;
+        this.pasarDeEstado[3] = true;
+        this.time=0;
+      } else {
+        this.pasarDeEstado[1] = false;
+        this.pasarDeEstado[3] = false;
+      }
+    }
+    return this.pasarDeEstado;
+  } // estado cerrado
+  
+
+  Reiniciarvariables() {
+    this.Puerta_Comeme = 0;
+    this.Puerta_Bebeme = 0;
+    this.time = 0;
+    this.Puerta_Muffin_Abierta = 0;
+    this.Puerta_Bebida_Abierta = 0;
+    this.pasarDeEstado = [];
+
+    // Restaurar las imágenes de las puertas cerradas
+    this.puerta = [...this.puerta.map(() => loadImage("imgjuego/puerta.png"))]
   }
-  obtenerPuertaBebeme() {
-    return this.Puerta_Bebeme;
-  }
-  obtenerPuerta_Muffin_Abierta() {
-    return  this.Puerta_Muffin_Abierta;
-  }
-  obtenerPuerta_Bebida_Abierta() {
-    return  this.Puerta_Bebida_Abierta;
-  }
-  obtenerpuerta() {
-    return this.puerta;
-  }
+
+
+
+
 }
