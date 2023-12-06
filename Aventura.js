@@ -1,16 +1,15 @@
 class Aventura {
   constructor() {
-    this.estado = 0;
-    this.time = 0;
+    this.estado= 0;
     this.p = 18; // cantidad de img de fondo
     this.fondo = [];
     // carga de pantallas de fondo
     for (let i = 0; i < this.p; i++) {
       this.fondo[i] = loadImage('img/Fondo' + i + '.png');
     }
-    this.Fondodejuego = loadImage('imgjuego/Fondo.png');
-    this.puerta = new Puertas();
+
     this.texto = new Texto();
+    this.minijuego = new Minijuego();
     this.boton = [];
     this.boton[0] = new Boton(220, 240, 170, 40); //boton 1 menu (estado 0)
     this.boton[1] = new Boton(220, 330, 170, 40); //boton 2 menu (estado 0)
@@ -192,63 +191,34 @@ class Aventura {
     }
     if (this.estado == '18') {  // minijuego parte 1: comeme
       background(0);
-      image(this.Fondodejuego, 0, 0);
-      this.puerta.dibujar();
+      this.minijuego.dibujar();
+      this.minijuego.PuertaCondicion()
+        const pasarDeEstado = this.minijuego.pasarDeEstado;
+      if (pasarDeEstado[2] == true) {
+        this.estado= '10';
+      }
+      if (pasarDeEstado[3] == true) {
+        this.estado= '0';
+      }
       const textos = this.texto.Textos();
       const textoboton = this.texto.Textosboton();
-      this.texto.DecoracionTexto();
-      text(this.time, 30, 30);
-      const Puerta_Comeme = this.puerta.obtenerPuertaComeme();
-      const Puerta_Bebeme = this.puerta.obtenerPuertaBebeme();
-      if (Puerta_Comeme >= 3) {
-        this.time++;
-        this.texto.Botonesx1(textoboton[21], 50, 300, 100, color (255, 224, 248));
-        if (this.time >= 90) {
-          this.estado= '10';
-          this.time=0;
-          this.reiniciarPresione();
-        }
-      }
-      if (Puerta_Bebeme >= 3) {
-        this.time++;
-        this.texto.Botonesx1(textoboton[22], 30, 300, 60, color (255, 224, 248));
-        if (this.time >= 100) {
-          this.estado= '0';
-          this.time=0;
-          this.reiniciarPresione();
-        }
-      }
       this.texto.TextoenPantallaX2(textos[34], textos[35], 620, 140, 350);
       this.texto.Botonesx1(textoboton[20], 670, 70, 30, color (47, 118, 42));
     } // estado cerrado
-    if (this.estado == '19') { // minijuego parte 2: bebeme
+
+    if (this.estado == '19') {  // minijuego parte :2 Bebeme
       background(0);
-      image(this.Fondodejuego, 0, 0);
-      this.puerta.dibujar();
+      this.minijuego.dibujar();
+      this.minijuego. PuertaCondicion()
+        const pasarDeEstado = this.minijuego.pasarDeEstado;
+      if (pasarDeEstado[0] == true) {
+        this.estado= '0';
+      }
+      if (pasarDeEstado[1] == true) {
+        this.estado= '3';
+      }
       const textos = this.texto.Textos();
       const textoboton = this.texto.Textosboton();
-      this.texto.DecoracionTexto();
-      text(this.time, 30, 30);
-      const Puerta_Comeme = this.puerta.obtenerPuertaComeme();
-      const Puerta_Bebeme = this.puerta.obtenerPuertaBebeme();
-      if (Puerta_Comeme >= 3) {
-        this.time++;
-        this.texto.Botonesx1(textoboton[22], 30, 300, 60, color (255, 224, 248));
-        if (this.time >= 100) {
-          this.estado= '0';
-          this.time=0;
-          this.reiniciarPresione();
-        }
-      }
-      if (Puerta_Bebeme >= 3) {
-        this.time++;
-        this.texto.Botonesx1(textoboton[21], 50, 300, 100, color (255, 224, 248));
-        if (this.time >= 90) {
-          this.estado= '3';
-          this.time=0;
-          this.reiniciarPresione();
-        }
-      }
       this.texto.TextoenPantallaX2(textos[34], textos[35], 620, 140, 350);
       this.texto.Botonesx1(textoboton[20], 670, 70, 30, color (47, 118, 42));
     } // estado cerrado
@@ -385,28 +355,16 @@ class Aventura {
       }
     }
   }// cerrado abrir cambiar de estado
-  Abrirpuerta() {
-    this.puerta.Abrirpuerta();
-  }
 
-  Reiniciarvariables() {
-    const nuevaPuerta = new Puertas();
-    // Reiniciar variables del juego en la nueva instancia
-    nuevaPuerta.Puerta_Muffin_Abierta = 0;
-    nuevaPuerta.Puerta_Bebida_Abierta = 0;
-    nuevaPuerta.Puerta_Comeme = 0;
-    nuevaPuerta.Puerta_Bebeme = 0;
-    // Restaurar las imágenes de las puertas cerradas en la nueva instancia
-    nuevaPuerta.puerta = [...nuevaPuerta.puerta.map(() => loadImage("imgjuego/puerta.png"))];
-    // Asignar la nueva instancia a la propiedad puerta de esta clase
-    this.puerta = nuevaPuerta;
+  Abrirpuerta() {
+    this.minijuego.Abrirpuerta();
   }
 
   Condiciontexto() {
     this.texto.Condiciontexto();
   }
 
-  reiniciarPresione() {  // reiniciar variables booleana de si presiono los numeros de los textos..
+  reiniciarPresione() {
     this.texto.reiniciarPresione();
   }
 
@@ -416,5 +374,9 @@ class Aventura {
 
   Reproducirsonido() {
     this.sonido.loop(true);
+  }
+
+  Reiniciarvariables() {
+    this.minijuego.Reiniciarvariables();
   }
 }// clase cerrada
