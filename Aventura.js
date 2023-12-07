@@ -33,12 +33,11 @@ class Aventura {
       this.boton[1].dibujar(220, 390, 330, 370);
       this.texto.Encuadre();
       const textoboton = this.texto.Textosboton();
-      this.texto.Botonesx2(textoboton[23], textoboton[24], 230, 270, 230, 360, 30);
+      this.texto.Botonesx2(textoboton[21], textoboton[22], 230, 270, 230, 360, 30);
     }
     if (this.estado == '1') {
       background(0);
-      //this.Reproducirsonido();
-      image(this.fondo[1], 0, 0);
+     image(this.fondo[1], 0, 0);
       this.boton[3].dibujar(10, 110, 550, 590);
       const textos = this.texto.Textos();
       const textoboton = this.texto.Textosboton();
@@ -110,6 +109,7 @@ class Aventura {
       const textoboton = this.texto.Textosboton();
       this.texto.TextoenPantallaX2(textos[15], textos[16], 620, 60, 200);
       this.texto.Botonesx1(textoboton[10], 33, 580, 30, color (255, 224, 248));
+     
     }
     if (this.estado == '9') {
       background(0);
@@ -174,13 +174,15 @@ class Aventura {
       const textoboton = this.texto.Textosboton();
       this.texto.TextoenPantallaX2(textos[31], textos[32], 620, 60, 200);
       this.texto.Botonesx1(textoboton[18], 33, 580, 30, color (255, 224, 248));
-    }                                                                                          // CORREGIR DESDE ACA
+    
+    }                                                                                          
     if (this.estado == '16') { //3er final : NO es un sueño....sin textos xb
       background(0);
       image(this.fondo[16], 0, 0);
       this.boton[8].dibujar(490, 590, 550, 590);
       const textoboton = this.texto.Textosboton();
       this.texto.PantallasSinTexto(textoboton[18], 513, 580);
+     
     }
     if (this.estado == '17') {  // creditos
       background(0);
@@ -189,11 +191,12 @@ class Aventura {
       const textoboton = this.texto.Textosboton();
       this.texto.PantallasSinTexto(textoboton[19], 245, 540);
     }
-    if (this.estado == '18') {  // minijuego parte 1: comeme
+    if (this.estado == '18') {  // estado de minijuego parte 1: comeme
       background(0);
       this.minijuego.dibujar();
-      this.minijuego.PuertaCondicion()
-        const pasarDeEstado = this.minijuego.pasarDeEstado;
+      this.minijuego.PuertaCondicion();
+      const textoboton = this.texto.Textosboton();
+      const pasarDeEstado = this.minijuego.pasarDeEstado;
       if (pasarDeEstado[2] == true) {
         this.estado= '10';
       }
@@ -201,7 +204,7 @@ class Aventura {
         this.estado= '0';
       }
       const textos = this.texto.Textos();
-      const textoboton = this.texto.Textosboton();
+     
       this.texto.TextoenPantallaX2(textos[34], textos[35], 620, 140, 350);
       this.texto.Botonesx1(textoboton[20], 670, 70, 30, color (47, 118, 42));
     } // estado cerrado
@@ -353,6 +356,11 @@ class Aventura {
         this.estado = '0';
         this.reiniciarPresione();
       }
+    } 
+   if (this.toqueAqui(900,960,570,580)){  // para apagar sonido si se quiere hacer. 
+    this.Apagarsonido();
+    }else if (this.toqueAqui(900,960,570,580)){
+     this.Reproducirsonido();
     }
   }// cerrado abrir cambiar de estado
 
@@ -374,6 +382,10 @@ class Aventura {
 
   Reproducirsonido() {
     this.sonido.loop(true);
+  }
+  
+  Apagarsonido(){
+   this.sonido.stop();
   }
 
   Reiniciarvariables() {
