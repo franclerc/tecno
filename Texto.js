@@ -19,7 +19,13 @@ class Texto {
     this.Contenedor(0, 0, 6, 600);  //izquierda
     this.Contenedor(1000, 0, 6, 600); // derecha
     this.Decoraciondetexto(12, this.tipografia[0], color (0));
-    text("PRESIONA 4 PARA REDUCIR LOS TEXTOS", 670, 580);
+    text("PRESIONA 4 PARA REDUCIR LOS TEXTOS", 640, 580);
+    if (mouseX > 900 && mouseX < 960 && mouseY > 570 && mouseY < 580 ){
+    this.Decoraciondetexto(9, this.tipografia[0], color (100,0,0));
+    }else {
+    this.Decoraciondetexto(9, this.tipografia[0], color (230,0,0));
+    }
+    text("OFF SONIDO", 900, 580);
   }
   Textos() {
     const textos = [
@@ -69,8 +75,7 @@ class Texto {
       'QUEDARSE\n'+'A TOMAR TÉ', 'ESTAN MUY\n'+'LOCOS:IRTE', 'FIN..',
       'INGRESAR..', 'METERSE', 'VER JUGAR\n'+'A LA REINA', 'QUE INICIE\n'+'EL JUICIO..',
       'ES INJUSTO,\n'+'INTERVENIR', 'ES UN\n'+'SUEÑO', 'ES LA\n'+'REALIDAD', 'FIN..',
-      'VOLVER', 'INSTRUCCIONES', 'Exelente!', 'Te equiocaste\nde duplas..',
-      'Empezar', 'Creditos',
+      'VOLVER', 'INSTRUCCIONES', 'Empezar', 'Creditos',
       ]
       return textoboton;
   }
